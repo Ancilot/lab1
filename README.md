@@ -29,7 +29,7 @@
 
 ## Скриншот работы приложения
   ### Форма ввода студента
-  ![Форма ввода](Screenshot/form.png)
+  ![Форма ввода](Screenshots/form.png)
   
   ### Результат обработки
-  ![Результат](Screenshot/result.png)
+  ![Результат](Screenshots/result.png)
