@@ -41,18 +41,18 @@ public class MainController {
     @PostMapping("/form")
     public String mainForm(@ModelAttribute Student student, Model
             model){
-        String year = String.valueOf(student.getYear());
+       // String year = String.valueOf(student.getYear());
 
         // Последние две цифры года
-        String lastTwoDigits = year.substring(year.length() - 2);
+       // String lastTwoDigits = year.substring(year.length() - 2);
 
         // группа
-        String group = "ПИН-1" + lastTwoDigits;
-        student.setGroup(group);
+       // String group = "ПИН-1" + lastTwoDigits;
+        //student.setGroup(group);
 
         // логин
-        String login = "student-pin1" + lastTwoDigits + "-" + student.getId();
-        student.setLogin(login);
+        //  String login = "student-pin1" + lastTwoDigits + "-" + student.getId();
+       // student.setLogin(login);
         model.addAttribute("student", student);
         return "result";
     }
