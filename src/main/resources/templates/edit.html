@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Владелец автомобиля</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+        }
+
+        .buttons {
+            margin-top: 20px;
+        }
+
+        button,
+        .back {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        button {
+            background-color: #198754;
+            color: white;
+        }
+
+        .back {
+            background-color: #6c757d;
+            color: white;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1 th:if="${carOwner.id == null}">
+        Добавление владельца автомобиля
+    </h1>
+
+    <h1 th:if="${carOwner.id != null}">
+        Редактирование владельца автомобиля
+    </h1>
+
+    <form th:if="${carOwner.id == null}"
+          th:action="@{/add}"
+          th:object="${carOwner}"
+          method="post">
+
+        <div class="form-group">
+            <label>Фамилия:</label>
+            <input type="text"
+                   th:field="*{lastName}"
+                   placeholder="Введите фамилию"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label>Имя:</label>
+            <input type="text"
+                   th:field="*{firstName}"
+                   placeholder="Введите имя"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label>Отчество:</label>
+            <input type="text"
+                   th:field="*{middleName}"
+                   placeholder="Введите отчество"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label>Номер телефона:</label>
+            <input type="text"
+                   th:field="*{phone}"
+                   placeholder="Введите номер телефона"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label>Марка автомобиля:</label>
+            <input type="text"
+                   th:field="*{carBrand}"
+                   placeholder="Введите марку автомобиля"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label>Номер автомобиля:</label>
+            <input type="text"
+                   th:field="*{carNumber}"
+                   placeholder="Введите номер автомобиля"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label>Номер техпаспорта:</label>
+            <input type="text"
+                   th:field="*{technicalPassport}"
+                   placeholder="Введите номер техпаспорта"
+                   required>
+        </div>
+
+        <div class="buttons">
+            <button type="submit">
+                Добавить
+            </button>
+
+            <a class="back"
+               th:href="@{/}">
+                Назад
+            </a>
+        </div>
+
+    </form>
+
+
+    <form th:if="${carOwner.id != null}"
+          th:action="@{/update}"
+          th:object="${carOwner}"
+          method="post">
+
+        <input type="hidden"
+               th:field="*{id}">
+
+        <div class="form-group">
+            <label>Фамилия:</label>
+            <input type="text"
+                   th:field="*{lastName}"
+                   placeholder="Введите фамилию"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label>Имя:</label>
+            <input type="text"
+                   th:field="*{firstName}"
+                   placeholder="Введите имя"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label>Отчество:</label>
+            <input type="text"
+                   th:field="*{middleName}"
+                   placeholder="Введите отчество"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label>Номер телефона:</label>
+            <input type="text"
+                   th:field="*{phone}"
+                   placeholder="Введите номер телефона"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label>Марка автомобиля:</label>
+            <input type="text"
+                   th:field="*{carBrand}"
+                   placeholder="Введите марку автомобиля"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label>Номер автомобиля:</label>
+            <input type="text"
+                   th:field="*{carNumber}"
+                   placeholder="Введите номер автомобиля"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label>Номер техпаспорта:</label>
+            <input type="text"
+                   th:field="*{technicalPassport}"
+                   placeholder="Введите номер техпаспорта"
+                   required>
+        </div>
+
+        <div class="buttons">
+            <button type="submit">
+                Сохранить изменения
+            </button>
+
+            <a class="back"
+               th:href="@{/}">
+                Назад
+            </a>
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+</html>

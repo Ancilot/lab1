@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Информация о владельце</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            margin-bottom: 25px;
+        }
+
+        .row {
+            padding: 12px;
+            border-bottom: 1px solid #dddddd;
+        }
+
+        .label {
+            font-weight: bold;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 20px;
+            margin-right: 10px;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .back {
+            background-color: #6c757d;
+        }
+
+        .edit {
+            background-color: #ffc107;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Информация о владельце</h1>
+
+    <div class="row">
+        <span class="label">ID:</span>
+        <span th:text="${selectedCarOwner.id}"></span>
+    </div>
+
+    <div class="row">
+        <span class="label">Фамилия:</span>
+        <span th:text="${selectedCarOwner.lastName}"></span>
+    </div>
+
+    <div class="row">
+        <span class="label">Имя:</span>
+        <span th:text="${selectedCarOwner.firstName}"></span>
+    </div>
+
+    <div class="row">
+        <span class="label">Отчество:</span>
+        <span th:text="${selectedCarOwner.middleName}"></span>
+    </div>
+
+    <div class="row">
+        <span class="label">Номер телефона:</span>
+        <span th:text="${selectedCarOwner.phone}"></span>
+    </div>
+
+    <div class="row">
+        <span class="label">Марка автомобиля:</span>
+        <span th:text="${selectedCarOwner.carBrand}"></span>
+    </div>
+
+    <div class="row">
+        <span class="label">Номер автомобиля:</span>
+        <span th:text="${selectedCarOwner.carNumber}"></span>
+    </div>
+
+    <div class="row">
+        <span class="label">Номер техпаспорта:</span>
+        <span th:text="${selectedCarOwner.technicalPassport}"></span>
+    </div>
+
+    <a class="button back"
+       th:href="@{/}">
+        Назад
+    </a>
+
+    <a class="button edit"
+       th:href="@{'/update/' + ${selectedCarOwner.id}}">
+        Изменить
+    </a>
+
+</div>
+
+</body>
+</html>

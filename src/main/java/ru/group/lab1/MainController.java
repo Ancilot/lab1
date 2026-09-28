@@ -2,60 +2,118 @@ package ru.group.lab1;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import ru.group.lab1.repository.CarRepository;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Controller ("main")
 public class MainController {
+
+    private final CarRepository carRepository;
+
+    public MainController(CarRepository carRepository) {
+        this.carRepository = carRepository;
+    }
+
+    // Главная страница со списком владельцев
     @GetMapping("/")
-    public String home(Model model){
-        model.addAttribute("title", "Главная страница");
-        model.addAttribute("data", "Добро пожаловать!");
-        model.addAttribute("content", "В будущем здесь что то будет");
+    public String mainPage(Model model) {
+
+        List<CarOwner> carOwners = new ArrayList<>();
+        carRepository.findAll().forEach(carOwners::add);
+
+        model.addAttribute("carOwners", carOwners);
+
         return "main";
     }
 
-    @GetMapping("about")
-    public String about(
-            @RequestParam(
-                    name = "name",
-                    required = false,
-                    defaultValue = "Имя автора"
-            ) String name,
-            Model model) {
+    // Страница добавления нового владельца
+    @GetMapping("/add")
+    public String addPage(Model model) {
 
-        model.addAttribute("title", "Страница автора");
-        model.addAttribute("author", name);
+        model.addAttribute("carOwner", new CarOwner());
 
-        return "about";
+        return "edit";
     }
 
-    @GetMapping("/form")
-    public String mainForm(Model model){
-        model.addAttribute("student", new Student());
-        return "main-form";
+    // Добавление нового владельца
+    @PostMapping("/add")
+    public String addCarOwner(@ModelAttribute CarOwner carOwner) {
+
+        carRepository.save(carOwner);
+
+        return "redirect:/";
     }
 
-    @PostMapping("/form")
-    public String mainForm(@ModelAttribute Student student, Model
-            model){
-       // String year = String.valueOf(student.getYear());
+    // Получение владельца по id
+    @GetMapping("/details/{id}")
+    public String detailsPage(
+            Model model,
+            @PathVariable("id") Long id) {
 
-        // Последние две цифры года
-       // String lastTwoDigits = year.substring(year.length() - 2);
+        Optional<CarOwner> optionalCarOwner =
+                carRepository.findById(id);
 
-        // группа
-       // String group = "ПИН-1" + lastTwoDigits;
-        //student.setGroup(group);
+        if (optionalCarOwner.isEmpty()) {
+            return "redirect:/";
+        }
 
-        // логин
-        //  String login = "student-pin1" + lastTwoDigits + "-" + student.getId();
-       // student.setLogin(login);
-        model.addAttribute("student", student);
-        return "result";
+        model.addAttribute(
+                "selectedCarOwner",
+                optionalCarOwner.get()
+        );
+
+        return "details";
     }
 
+    // Страница редактирования
+    @GetMapping("/update/{id}")
+    public String editPage(
+            Model model,
+            @PathVariable("id") Long id) {
+
+        Optional<CarOwner> optionalCarOwner =
+                carRepository.findById(id);
+
+        if (optionalCarOwner.isEmpty()) {
+            return "redirect:/";
+        }
+
+        model.addAttribute(
+                "carOwner",
+                optionalCarOwner.get()
+        );
+
+        return "edit";
+    }
+
+    // Сохранение изменений
+    @PostMapping("/update")
+    public String editCarOwner(
+            @ModelAttribute CarOwner carOwner) {
+
+        if (!carRepository.existsById(carOwner.getId())) {
+            return "redirect:/";
+        }
+
+        carRepository.save(carOwner);
+
+        return "redirect:/";
+    }
+
+    // Удаление
+    @GetMapping("/delete/{id}")
+    public String deleteCarOwner(
+            @PathVariable("id") Long id) {
+
+        if (carRepository.existsById(id)) {
+            carRepository.deleteById(id);
+        }
+
+        return "redirect:/";
+    }
 }
 

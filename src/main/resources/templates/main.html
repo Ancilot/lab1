@@ -1,21 +1,61 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title th:text="${title}"></title>
-
-    <link rel="stylesheet" th:href="@{/stylе.css}">
+    <title>Владельцы автомобилей</title>
 </head>
 
 <body>
 
-<header>
-    <h1 th:text="${data}"></h1>
-</header>
+<h1>Владельцы автомобилей</h1>
 
-<main>
-    <p th:text="${content}"></p>
-</main>
+<a th:href="@{/add}">
+    Добавить владельца
+</a>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Фамилия</th>
+        <th>Имя</th>
+        <th>Телефон</th>
+        <th>Автомобиль</th>
+        <th>Номер</th>
+        <th>Действия</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+    <tr th:each="owner : ${carOwners}">
+
+        <td th:text="${owner.id}"></td>
+        <td th:text="${owner.lastName}"></td>
+        <td th:text="${owner.firstName}"></td>
+        <td th:text="${owner.phone}"></td>
+        <td th:text="${owner.carBrand}"></td>
+        <td th:text="${owner.carNumber}"></td>
+
+        <td>
+            <a th:href="@{'/details/' + ${owner.id}}">
+                Подробнее
+            </a>
+
+            <a th:href="@{'/update/' + ${owner.id}}">
+                Изменить
+            </a>
+
+            <a th:href="@{'/delete/' + ${owner.id}}">
+                Удалить
+            </a>
+        </td>
+
+    </tr>
+
+    </tbody>
+</table>
 
 </body>
 </html>
